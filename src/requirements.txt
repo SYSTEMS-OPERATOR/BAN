@@ -1,0 +1,4 @@
+# Python dependencies for BAN Hub
+wifi
+flake8
+pytest
