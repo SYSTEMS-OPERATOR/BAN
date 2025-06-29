@@ -20,15 +20,18 @@ This project aims to provide a universal hub for managing personal devices such 
    # compile on Python versions newer than 3.10.
    # Skip this if installation fails or you don't need Bluetooth.
    pip install pybluez || true
+
    ```
 3. Run the hub:
    ```bash
    python hub.py
    ```
+
 4. Run lint and tests:
    ```bash
    flake8 src tests
    pytest -q
    ```
+
 
 Refer to `docs/setup.md` for more details.
