@@ -17,3 +17,4 @@ This document provides an overview of how to set up the BAN Hub.
    ```
    See `python hub.py --help` for more options such as scanning only Wi-Fi or
    specifying a different interface.
+

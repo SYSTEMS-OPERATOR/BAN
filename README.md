@@ -36,4 +36,5 @@ This project aims to provide a universal hub for managing personal devices such 
    pytest -q
    ```
 
+
 Refer to `docs/setup.md` for more details.
