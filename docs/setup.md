@@ -1,6 +1,6 @@
 # Setup Guide
 
-This document provides an overview of how to set up the BAN Hub.
+This document provides an overview of how to set up the BAN Hub. Bluetooth support is provided via the `bleak` library.
 
 1. Assemble the hardware following the instructions in the `hardware` directory.
 2. Navigate to the `src` directory and install dependencies:

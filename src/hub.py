@@ -1,11 +1,12 @@
-"""Simple BAN Hub skeleton."""
+"""Simple BAN Hub skeleton using the bleak library for Bluetooth scanning."""
 
 import logging
+import asyncio
 
 try:
-    import bluetooth
+    from bleak import BleakScanner
 except ImportError:
-    bluetooth = None
+    BleakScanner = None
 
 try:
     import wifi
@@ -13,12 +14,13 @@ except ImportError:
     wifi = None
 
 
-def scan_bluetooth_devices():
-    if not bluetooth:
-        logging.warning("PyBluez is not installed. Bluetooth scanning unavailable.")
+async def scan_bluetooth_devices():
+    if not BleakScanner:
+        logging.warning("bleak is not installed. Bluetooth scanning unavailable.")
         return []
     logging.info("Scanning for Bluetooth devices...")
-    return bluetooth.discover_devices(duration=8, lookup_names=True)
+    devices = await BleakScanner.discover()
+    return [(d.address, d.name or "Unknown") for d in devices]
 
 
 def scan_wifi_networks():
@@ -30,9 +32,9 @@ def scan_wifi_networks():
     return [(cell.ssid, cell.address) for cell in cells]
 
 
-def main():
+async def main():
     logging.basicConfig(level=logging.INFO)
-    bt_devices = scan_bluetooth_devices()
+    bt_devices = await scan_bluetooth_devices()
     for addr, name in bt_devices:
         logging.info("Found Bluetooth device %s at %s", name, addr)
 
@@ -42,4 +44,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())

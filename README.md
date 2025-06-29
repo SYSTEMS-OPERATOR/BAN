@@ -1,6 +1,6 @@
 # Body Area Network Hub (BAN Hub)
 
-This project aims to provide a universal hub for managing personal devices such as wearables and sensors. It supports Bluetooth and Wi-Fi communication with optional USB connectivity.
+This project aims to provide a universal hub for managing personal devices such as wearables and sensors. It supports Bluetooth (via the `bleak` library) and Wi-Fi communication with optional USB connectivity.
 
 ## Directory Structure
 
