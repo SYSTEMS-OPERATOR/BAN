@@ -2,3 +2,5 @@
 wifi
 flake8
 pytest
+pybluez
+wifi

@@ -18,11 +18,13 @@ This project aims to provide a universal hub for managing personal devices such 
    pip install -r requirements.txt
    # For Bluetooth scanning install pybluez separately
    pip install pybluez
+
    ```
 3. Run the hub:
    ```bash
    python hub.py
    ```
+   
 4. Run lint and tests:
    ```bash
    flake8 src tests

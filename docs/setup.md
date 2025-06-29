@@ -8,6 +8,7 @@ This document provides an overview of how to set up the BAN Hub.
    pip install -r requirements.txt
    # Optional: install pybluez for Bluetooth scanning
    pip install pybluez
+
    ```
 3. Run the hub:
    ```bash
