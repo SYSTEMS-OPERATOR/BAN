@@ -1,46 +1,79 @@
-"""Simple BAN Hub skeleton using the bleak library for Bluetooth scanning."""
+"""BAN hub routines for Bluetooth and Wi-Fi discovery.
 
-import logging
+Dev Agent Breadcrumbs
+---------------------
+1. ``main`` orchestrates startup and scan execution.
+2. ``scan_bluetooth_devices`` returns normalized Bluetooth records.
+3. ``scan_wifi_networks`` returns normalized Wi-Fi records.
+"""
+
+from __future__ import annotations
+
 import asyncio
+import logging
+from typing import List, Tuple
+
+LOGGER = logging.getLogger(__name__)
+WIFI_INTERFACE = "wlan0"
 
 try:
     from bleak import BleakScanner
-except ImportError:
+except ImportError:  # pragma: no cover - environment dependent import
     BleakScanner = None
 
 try:
     import wifi
-except ImportError:
+except ImportError:  # pragma: no cover - environment dependent import
     wifi = None
 
 
-async def scan_bluetooth_devices():
-    if not BleakScanner:
-        logging.warning("bleak is not installed. Bluetooth scanning unavailable.")
+def configure_logging() -> None:
+    """Configure application logging for the BAN hub runtime."""
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s | %(levelname)s | %(name)s | %(message)s",
+    )
+
+
+async def scan_bluetooth_devices() -> List[Tuple[str, str]]:
+    """Scan for Bluetooth devices and return ``(address, name)`` pairs."""
+    if BleakScanner is None:
+        LOGGER.warning(
+            "bleak is not installed. Bluetooth scanning unavailable."
+        )
         return []
-    logging.info("Scanning for Bluetooth devices...")
+
+    LOGGER.info("Scanning for Bluetooth devices...")
     devices = await BleakScanner.discover()
-    return [(d.address, d.name or "Unknown") for d in devices]
+    return [(device.address, device.name or "Unknown") for device in devices]
 
 
-def scan_wifi_networks():
-    if not wifi:
-        logging.warning("wifi library is not installed. Wi-Fi scanning unavailable.")
+def scan_wifi_networks(
+    interface: str = WIFI_INTERFACE,
+) -> List[Tuple[str, str]]:
+    """Scan for Wi-Fi networks and return ``(ssid, bssid)`` pairs."""
+    if wifi is None:
+        LOGGER.warning(
+            "wifi library is not installed. Wi-Fi scanning unavailable."
+        )
         return []
-    logging.info("Scanning for Wi-Fi networks...")
-    cells = wifi.Cell.all('wlan0')
+
+    LOGGER.info("Scanning for Wi-Fi networks on interface %s...", interface)
+    cells = wifi.Cell.all(interface)
     return [(cell.ssid, cell.address) for cell in cells]
 
 
-async def main():
-    logging.basicConfig(level=logging.INFO)
-    bt_devices = await scan_bluetooth_devices()
-    for addr, name in bt_devices:
-        logging.info("Found Bluetooth device %s at %s", name, addr)
+async def main() -> None:
+    """Run the BAN hub startup sequence and emit discovery results."""
+    configure_logging()
+
+    bluetooth_devices = await scan_bluetooth_devices()
+    for address, name in bluetooth_devices:
+        LOGGER.info("Found Bluetooth device %s at %s", name, address)
 
     wifi_networks = scan_wifi_networks()
     for ssid, bssid in wifi_networks:
-        logging.info("Found Wi-Fi network %s at %s", ssid, bssid)
+        LOGGER.info("Found Wi-Fi network %s at %s", ssid, bssid)
 
 
 if __name__ == "__main__":

@@ -1,13 +1,15 @@
-"""Example script that scans for nearby Bluetooth and Wi-Fi devices using the hub."""
-from pathlib import Path
-import sys
+"""Run BAN hub scans from the examples directory.
 
-# Ensure src directory is on path
-sys.path.append(str(Path(__file__).resolve().parents[1] / 'src'))
+Dev Agent Breadcrumbs
+---------------------
+1. Import the orchestrating ``main`` coroutine from ``src.hub``.
+2. Execute the async runtime with ``asyncio.run``.
+"""
 
-from hub import main
 import asyncio
 
-if __name__ == '__main__':
-    asyncio.run(main())
+from src.hub import main
 
+
+if __name__ == "__main__":
+    asyncio.run(main())
