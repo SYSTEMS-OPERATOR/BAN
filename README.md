@@ -1,39 +1,38 @@
 # Body Area Network Hub (BAN Hub)
-[![CI](https://github.com/yourorg/BAN/actions/workflows/python.yml/badge.svg)](https://github.com/yourorg/BAN/actions/workflows/python.yml)
-[![codecov](https://codecov.io/gh/yourorg/BAN/branch/main/graph/badge.svg)](https://codecov.io/gh/yourorg/BAN)
 
-This project aims to provide a universal hub for managing personal devices such as wearables and sensors. It supports Bluetooth (via the `bleak` library) and Wi-Fi communication with optional USB connectivity.
+BAN Hub is a lightweight Python project for discovering nearby wearable/sensor connectivity endpoints over Bluetooth and Wi-Fi.
+
+## Core Capabilities
+- Asynchronous Bluetooth scanning via `bleak` (when installed).
+- Wi-Fi network scanning via `wifi` (when installed).
+- Safe fallback behavior when optional dependencies are unavailable.
+- Simple tuple outputs that are easy to integrate downstream.
 
 ## Directory Structure
-
-- `docs/` — Documentation and setup guides.
-- `hardware/` — Schematics and hardware assembly instructions.
-- `src/` — Source code for the hub software.
-- `examples/` — Sample scripts demonstrating hub usage.
+- `docs/` — setup and contribution documentation.
+- `hardware/` — hardware notes and assembly guidance.
+- `src/` — runtime source code.
+- `tests/` — unit tests for core logic.
+- `examples/` — runnable usage example.
 
 ## Quick Start
-
-1. Assemble the hardware using the instructions in `hardware/`.
-2. Install Python dependencies:
+1. Install dependencies:
    ```bash
-   cd src
-   pip install -r requirements.txt
+   pip install -r src/requirements.txt
    ```
-3. Run the hub:
+2. Run the hub:
    ```bash
-   python hub.py
+   python src/hub.py
    ```
-
-Refer to `docs/setup.md` for more details.
 
 ## Running Tests
-
-Run the test suite with `pytest`. Ensure the required testing
-dependencies are installed first:
-
 ```bash
-pip install -r src/requirements.txt
-pip install pytest pytest-asyncio pytest-cov
-pytest
+pip install pytest
+pytest -q
 ```
 
+## Dev Agent Breadcrumbs
+See logic breadcrumbs in:
+- `src/hub.py`
+- `examples/scan.py`
+- `MIND.md`, `BODY.md`, `SOUL.md`
